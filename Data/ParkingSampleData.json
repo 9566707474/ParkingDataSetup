@@ -1,7 +1,7 @@
 {
     "parkings": [
         {
-            "id": 1,
+            "id": "1",
             "name": "Asda",
             "address": "New Mart Road",
             "city": "Edinburgh",
@@ -16,7 +16,7 @@
             "blueprint": ""
         },
         {
-            "id": 2,
+            "id": "2",
             "name": "Asda",
             "address": "New Mart Road",
             "city": "Edinburgh",
