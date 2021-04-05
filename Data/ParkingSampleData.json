@@ -13,7 +13,7 @@
             },
             "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
             "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
-            "blueprint": ""
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
         },
         {
             "id": "2",
@@ -28,7 +28,7 @@
             },
             "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
             "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
-            "blueprint": ""
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
         }
     ]
 }
