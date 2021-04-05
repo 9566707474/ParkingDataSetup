@@ -11,8 +11,4 @@
     <PackageReference Include="IronPython.StdLib" Version="2.7.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>
