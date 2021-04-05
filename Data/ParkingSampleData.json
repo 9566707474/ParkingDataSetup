@@ -1,15 +1,34 @@
 {
-    "id": "1",
-    "name": "Asda",
-    "address": "New Mart Road",
-    "city": "Edinburgh",
-    "profileImage": "test",
-    "availableSlots": "100",
-    "location": {
-        "type": "Point",
-        "coordinates": [ 55.5555, -3.24566 ]
-    },
-    "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
-    "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
-    "blueprint": ""
+    "parkings": [
+        {
+            "id": 1,
+            "name": "Asda",
+            "address": "New Mart Road",
+            "city": "Edinburgh",
+            "profileImage": "test",
+            "availableSlots": "100",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.5555, -3.24566 ]
+            },
+            "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
+            "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
+            "blueprint": ""
+        },
+        {
+            "id": 2,
+            "name": "Asda",
+            "address": "New Mart Road",
+            "city": "Edinburgh",
+            "profileImage": "test",
+            "availableSlots": "100",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.5555, -3.24566 ]
+            },
+            "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
+            "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
+            "blueprint": ""
+        }
+    ]
 }

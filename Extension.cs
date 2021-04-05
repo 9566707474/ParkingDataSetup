@@ -1,17 +1,17 @@
 ﻿namespace ParkingDataSetup
 {
-    using System.Text.Json;
-
+    using Newtonsoft.Json;
+    
     public static class Extension
     {
-        public static T ToDeserialize<T>(this string json)
+        public static T DeserializeTo<T>(this string json)
         {
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         public static string ToJson<T>(this T obj)
         {
-            return JsonSerializer.Serialize(obj);
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }
