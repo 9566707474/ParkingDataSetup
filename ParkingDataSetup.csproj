@@ -6,9 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronPython" Version="2.7.11" />
-    <PackageReference Include="IronPython.Interpreter" Version="2.7.4" />
-    <PackageReference Include="IronPython.StdLib" Version="2.7.11" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.17.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Reflection;
@@ -33,19 +34,32 @@
 
             Console.WriteLine($"File reading completed");
 
-            foreach (var item in parking.Parkings)
-            {
-                var zipUploader = new DWGZipUploader()
-                {
-                    Parking = item
-                };
-
-                zipUploader.Run();
-            }
-
             ////TODO: Data reformating 
 
-            var result = Task.Run(async () => await PushToDatabase(parking.Parkings))?.Result;
+            var dwgZipUploaders = new List<DWGZipUploader>();
+
+            foreach (var item in parking.Parkings)
+            {
+                dwgZipUploaders.Add(new DWGZipUploader()
+                {
+                    Parking = item
+                });
+            }
+
+#if (DEBUG)
+            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = 1 };
+#else
+            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
+#endif
+
+            Parallel.ForEach(dwgZipUploaders, parallelOptions, p =>
+               {
+                   p.Run();
+               });
+
+            var filteredRecords = dwgZipUploaders.Where(e => e.IsError == true).Select(p => p.Parking).ToList();
+
+            var result = Task.Run(async () => await PushToDatabase(filteredRecords))?.Result;
 
             Console.WriteLine($"Data transfered to cosmos db");
 
@@ -99,31 +113,5 @@
 
             return cosmosDbService;
         }
-
-        ////static async void MakeRequest(string file)
-        ////{
-        ////    var client = new HttpClient();
-        ////    var queryString = HttpUtility.ParseQueryString(string.Empty);
-
-        ////    ////// Request headers
-        ////    ////client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "{subscription key}");
-
-        ////    // Request parameters
-        ////    queryString["api-version"] = ApiVersion;
-        ////    queryString["dataFormat"] = BlueprintFilFormat;
-        ////    queryString["subscription-key"] = SubscriptionKey;
-        ////    var uri = BaseUrl + "/mapData/upload?" + queryString;
-
-        ////    HttpResponseMessage response;
-
-        ////    // Request body
-        ////    byte[] byteData = Encoding.UTF8.GetBytes(file);
-
-        ////    using var content = new ByteArrayContent(byteData);
-        ////    content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-        ////    response = await client.PostAsync(uri, content);
-        ////    Console.WriteLine(response.StatusCode);
-
-        ////}
     }
 }
