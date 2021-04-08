@@ -16,11 +16,11 @@
 
     public class Program
     {
-        private static readonly IConfigurationRoot configurationSection;
+        private static readonly IConfiguration configuration;
 
         static Program()
         {
-            configurationSection = InitConfig();
+            configuration = InitConfig();
         }
 
         public static void Main(string[] args)
@@ -34,30 +34,42 @@
 
             Console.WriteLine($"File reading completed");
 
-            ////TODO: Data reformating 
+            //TODO: Data reformating 
 
-            var dwgZipUploaders = new List<DWGZipUploader>();
-
+            var indoorMapCreator = new List<IndoorMapCreator>();
+            var cosmosDb = Task.Run(async () => await InitializeCosmosClientInstanceAsync())?.Result;
+           
             foreach (var item in parking.Parkings)
             {
-                dwgZipUploaders.Add(new DWGZipUploader()
+                var parkingResponse = Task.Run(async () => await cosmosDb.GetItemAsync(item.Id, item.City))?.Result;
+    
+                var isMapAlreadyGenerated = false;
+
+                if (parkingResponse != null && !string.IsNullOrEmpty(parkingResponse.StateSetID) && !string.IsNullOrEmpty(parkingResponse.TilesetID))
                 {
-                    Parking = item
-                });
+                    isMapAlreadyGenerated = true;
+                }
+
+                indoorMapCreator.Add(new IndoorMapCreator()
+                {
+                    Parking = item,
+                    IsMapAlreadyGenerated = isMapAlreadyGenerated
+                }); ;
+             
             }
 
 #if (DEBUG)
             var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = 1 };
 #else
-            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
+                        var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
 #endif
 
-            Parallel.ForEach(dwgZipUploaders, parallelOptions, p =>
+            Parallel.ForEach(indoorMapCreator.Where(imc => !imc.IsMapAlreadyGenerated), parallelOptions, p =>
                {
                    p.Run();
                });
 
-            var filteredRecords = dwgZipUploaders.Where(e => e.IsError == true).Select(p => p.Parking).ToList();
+            var filteredRecords = indoorMapCreator.Where(e => !e.IsError).Select(p => p.Parking).ToList();
 
             var result = Task.Run(async () => await PushToDatabase(filteredRecords))?.Result;
 
@@ -66,7 +78,7 @@
             Console.ReadLine();
         }
 
-        private static IConfigurationRoot InitConfig()
+        private static IConfiguration InitConfig()
         {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
@@ -101,10 +113,10 @@
         /// <returns></returns>
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync()
         {
-            string databaseName = configurationSection.GetSection("CosmosDb:DatabaseName").Value;
-            string containerName = configurationSection.GetSection("CosmosDb:ContainerName").Value;
-            string account = configurationSection.GetSection("CosmosDb:Account").Value;
-            string key = configurationSection.GetSection("CosmosDb:Key").Value;
+            string databaseName = configuration["CosmosDb:DatabaseName"];
+            string containerName = configuration["CosmosDb:ContainerName"];
+            string account = configuration["CosmosDb:Account"];
+            string key = configuration["CosmosDb:Key"];
 
             var client = new CosmosClient(account, key);
             var cosmosDbService = new CosmosDbService(client, databaseName, containerName);

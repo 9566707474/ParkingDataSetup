@@ -1,34 +1,119 @@
 {
     "parkings": [
         {
-            "id": "1",
+            "id": "CP001",
             "name": "Asda",
             "address": "New Mart Road",
             "city": "Edinburgh",
-            "profileImage": "test",
+            "profileImage": "https://thumbs.dreamstime.com/z/man-driver-car-avatar-character-man-driver-car-avatar-character-vector-illustration-design-141689128.jpg",
             "availableSlots": "100",
             "location": {
                 "type": "Point",
-                "coordinates": [ 55.5555, -3.24566 ]
+                "coordinates": [ 55.9264099685443, -3.2458839171642353 ]
             },
-            "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
-            "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
             "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
         },
         {
-            "id": "2",
-            "name": "Asda",
-            "address": "New Mart Road",
+            "id": "CP002",
+            "name": "Morrisons",
+            "address": "Gyle Shopping Centre",
             "city": "Edinburgh",
-            "profileImage": "test",
-            "availableSlots": "100",
+            "profileImage": "https://thumbs.dreamstime.com/z/young-man-avatar-car-character-vector-illustration-design-86635827.jpg",
+            "availableSlots": "40",
             "location": {
                 "type": "Point",
-                "coordinates": [ 55.5555, -3.24566 ]
+                "coordinates": [ 55.93930122188032, -3.3153424013570048 ]
             },
-            "datasetID": "3d628cca-f635-4a14-f09e-5c151f01beaf",
-            "tilesetID": "a54d6f21-f9e1-8db6-98fe-661eaf7b8358",
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
+        },
+
+        {
+            "id": "CP003",
+            "name": "Halfords",
+            "address": "Hermiston Gait",
+            "city": "Edinburgh",
+            "profileImage": "https://thumbs.dreamstime.com/z/man-driver-car-avatar-character-man-driver-car-avatar-character-vector-illustration-design-141689184.jpg",
+            "availableSlots": "5",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.92568865291997, -3.303175901201232 ]
+            },
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
+        },
+
+        {
+            "id": "CP004",
+            "name": "Sainsbury's",
+            "address": "Inglis Green Road",
+            "city": "Edinburgh",
+            "profileImage": "https://thumbs.dreamstime.com/z/woman-driver-cafar-avatar-character-vector-illustration-design-141688769.jpg",
+            "availableSlots": "30",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.92627361733267, -3.239563939523302 ]
+            },
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
+        },
+
+        {
+            "id": "CP005",
+            "name": "Tesco Extra",
+            "address": "Meadow Place Road",
+
+            "city": "Edinburgh",
+            "profileImage": "https://thumbs.dreamstime.com/z/couple-car-avatar-character-couple-car-avatar-character-vector-illustration-design-139113485.jpg",
+            "availableSlots": "90",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.9408730092047, -3.293602610429921 ]
+            },
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
+        },
+
+        {
+            "id": "CP006",
+            "name": "Marks and Spencer",
+            "address": "Gyle Shopping Centre",
+
+            "city": "Edinburgh",
+            "profileImage": "https://thumbs.dreamstime.com/z/man-driver-car-avatar-character-man-driver-car-avatar-character-vector-illustration-design-141689128.jpg",
+            "availableSlots": "25",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.93839313246034, -3.308868038277189 ]
+            },
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
+            "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
+        },
+
+
+        {
+            "id": "CP007",
+            "name": "Decathlon",
+            "address": "Hermiston Gait",
+
+            "city": "Edinburgh",
+            "profileImage": "https://thumbs.dreamstime.com/z/woman-driver-cafar-avatar-character-vector-illustration-design-141688769.jpg",
+            "availableSlots": "35",
+            "location": {
+                "type": "Point",
+                "coordinates": [ 55.92552535450205, -3.3053998426189346 ]
+            },
+            "tilesetId": "a63afba5-a4a1-a6c5-8f68-aab13fbc80b0",
+            "statesetId": "e7beb048-8060-165d-5279-32fcda18a9b2",
             "blueprint": "C:\\Loga\\Prototype\\ParkingDataSetup\\Data\\SampleContosoDrawingPackage.zip"
         }
+
     ]
 }

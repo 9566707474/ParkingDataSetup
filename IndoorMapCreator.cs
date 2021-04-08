@@ -11,7 +11,7 @@
     using Newtonsoft.Json.Linq;
     using ParkingDataSetup.Model;
 
-    public class DWGZipUploader
+    public class IndoorMapCreator
     {
         private const string BaseUrl = "https://us.atlas.microsoft.com";
 
@@ -25,10 +25,13 @@
 
         public bool IsError { get; set; }
 
-        public DWGZipUploader()
+        public bool IsMapAlreadyGenerated { get; set; }
+
+        public IndoorMapCreator()
         {
             Parking = new Parking();
             IsError = false;
+            IsMapAlreadyGenerated = false;
         }
 
         public void Run()
@@ -49,9 +52,9 @@
 
                 resourceLocation = GetDatasetStatus(httpResponseMessage.Headers.Location.AbsoluteUri);
 
-                Parking.DatasetID = GetDatasetId(resourceLocation);
+                Parking.StateSetID = GetDatasetId(resourceLocation);
 
-                httpResponseMessage = GenerateTileset(Parking.DatasetID);
+                httpResponseMessage = GenerateTileset(Parking.StateSetID);
 
                 resourceLocation = GetTilesetStatus(httpResponseMessage.Headers.Location.AbsoluteUri);
 
@@ -260,12 +263,12 @@
             return GetDatasetStatus(url);
         }
 
-        private Guid GetDatasetId(string url)
+        private string GetDatasetId(string url)
         {
-            return url.Replace("https://atlas.microsoft.com/dataset/", "").Replace("?api-version=1.0", "").ToGuid();
+            return url.Replace("https://atlas.microsoft.com/dataset/", "").Replace("?api-version=1.0", "");
         }
 
-        private HttpResponseMessage GenerateTileset(Guid datasetId)
+        private HttpResponseMessage GenerateTileset(string datasetId)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -273,7 +276,7 @@
             // Request parameters
             queryString["subscription-key"] = SubscriptionKey;
             queryString["api-version"] = ApiVersion;
-            queryString["datasetId"] = datasetId.ToString();
+            queryString["datasetId"] = datasetId;
 
             var uri = BaseUrl + "/tileset/create/vector?" + queryString;
 
@@ -313,9 +316,9 @@
             return GetTilesetStatus(url);
         }
 
-        private Guid GetTilesetId(string url)
+        private string GetTilesetId(string url)
         {
-            return url.Replace("https://atlas.microsoft.com/tileset/", "").Replace("?api-version=1.0", "").ToGuid();
+            return url.Replace("https://atlas.microsoft.com/tileset/", "").Replace("?api-version=1.0", "");
         }
     }
 }

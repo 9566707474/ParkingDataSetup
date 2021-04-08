@@ -27,12 +27,13 @@
         [JsonProperty("location")]
         public Location Location { get; set; }
 
-        [JsonProperty("datasetID")]
-        public Guid DatasetID { get; set; }
+        [JsonProperty("statesetId")]
+        public string StateSetID { get; set; }
 
         [JsonProperty("tilesetID")]
-        public Guid TilesetID { get; set; }
+        public string TilesetID { get; set; }
 
+      
         [JsonProperty("blueprint")]
         public string Blueprint { get; set; }
     }
