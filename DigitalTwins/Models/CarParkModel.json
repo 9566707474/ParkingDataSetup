@@ -1,0 +1,27 @@
+{
+    "@id": "dtmi:com:model:CarPark;1",
+    "@type": "Interface",
+    "@context": "dtmi:dtdl:context;2",  
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "Name",
+            "schema": "string"
+        },
+        {
+            "@type": "Property",
+            "name": "Address",
+            "schema": "string"
+        },
+        {
+            "@type": "Property",
+            "name": "City",
+            "schema": "string"
+        },
+        {
+            "@type": "Relationship",
+            "name": "Contains",
+            "target": "dtmi:com:model:ParkingBay;1"
+        }
+    ]
+}

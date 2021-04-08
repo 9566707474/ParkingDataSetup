@@ -12,6 +12,7 @@
     using System.Web;
     using Microsoft.Azure.Cosmos;
     using Microsoft.Extensions.Configuration;
+    using ParkingDataSetup.DigitalTwins;
     using ParkingDataSetup.Model;
 
     public class Program
@@ -27,12 +28,19 @@
         {
             var filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\ParkingSampleData.json";
 
-            Console.WriteLine($"Input file path : " + filePath);
+            Log.Ok($"Input file path : " + filePath);
 
             var parkingData = File.ReadAllText(filePath);
             var parking = parkingData.DeserializeTo<Root>();
 
-            Console.WriteLine($"File reading completed");
+            filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\ParkingBaySampleData.json";
+
+            Log.Ok($"Input file path : " + filePath);
+
+            var parkingBayData = File.ReadAllText(filePath);
+            var parkingBayRoot = parkingBayData.DeserializeTo<ParkingBayRoot>();
+
+            Log.Ok($"File reading completed");
 
             //TODO: Data reformating 
 
@@ -50,7 +58,9 @@
                     isMapAlreadyGenerated = true;
                 }
 
-                indoorMapCreator.Add(new IndoorMapCreator()
+                 new DigitalTwinCreator(configuration, item, parkingBayRoot.ParkingBays).Create();
+
+                indoorMapCreator.Add(new IndoorMapCreator(configuration)
                 {
                     Parking = item,
                     IsMapAlreadyGenerated = isMapAlreadyGenerated
@@ -73,7 +83,7 @@
 
             var result = Task.Run(async () => await PushToDatabase(filteredRecords))?.Result;
 
-            Console.WriteLine($"Data transfered to cosmos db");
+            Log.Ok($"Data transfered to cosmos db");
 
             Console.ReadLine();
         }

@@ -1,0 +1,39 @@
+{
+    "parkingBays": [
+        {
+            "locationId": "CP001",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },
+        {
+            "locationId": "CP002",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },
+        {
+            "locationId": "CP003",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },
+        {
+            "locationId": "CP004",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },
+        {
+            "locationId": "CP005",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },    
+        {
+            "locationId": "CP006",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        },
+        {
+            "locationId": "CP007",
+            "parkingSlots": [ "Bay1", "Bay2" ],
+            "allowDigitalTwinCreation": false
+        }
+    ]
+}

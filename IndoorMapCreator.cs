@@ -7,9 +7,9 @@
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Web;
-
-    using Newtonsoft.Json.Linq;
     using ParkingDataSetup.Model;
+    using Newtonsoft.Json.Linq;
+    using Microsoft.Extensions.Configuration;
 
     public class IndoorMapCreator
     {
@@ -17,7 +17,7 @@
 
         private const string ApiVersion = "1.0";
 
-        private const string SubscriptionKey = "Qx05yzZN1EVBesESLh1CCFiiUSRbccCB-d5LP-sqkxE";
+        private string SubscriptionKey;
 
         private const string BlueprintFilFormat = "zip";
 
@@ -26,9 +26,11 @@
         public bool IsError { get; set; }
 
         public bool IsMapAlreadyGenerated { get; set; }
+       
 
-        public IndoorMapCreator()
+        public IndoorMapCreator(IConfiguration configuration)
         {
+            SubscriptionKey = configuration["AzureMapsSubscriptionKey"];
             Parking = new Parking();
             IsError = false;
             IsMapAlreadyGenerated = false;
@@ -62,13 +64,13 @@
 
                 IsError = false;
 
-                Console.WriteLine("DWGZipUploader successfull for : " + Parking.Id);
+                Log.Ok("IndoorMap creation successful for : " + Parking.Id);
             }
             catch (Exception ex)
             {
                 IsError = true;
-                var errorMessage = string.Format("Record not processed : {0}; {1}", Parking.Id, ex);
-                Console.WriteLine(errorMessage);
+                var errorMessage = string.Format("IndoorMap creation failed : {0}; {1}", Parking.Id, ex);
+                Log.Error(errorMessage);
             }
         }
 
@@ -112,7 +114,7 @@
                 throw new HttpRequestException("Failed in UploadDwg for id: " + Parking.Id);
             }
 
-            Console.WriteLine("DWG Upload accepted for id: " + Parking.Id);
+            Log.Ok("DWG Upload accepted for id: " + Parking.Id);
 
             return response;
         }
@@ -127,13 +129,13 @@
             dynamic data = JObject.Parse(responseBody);
             if (data.status == "Succeeded")
             {
-                Console.WriteLine("DWG upload successful for id: " + Parking.Id);
+                Log.Ok("DWG upload successful for id: " + Parking.Id);
                 return data.resourceLocation;
             }
 
             if (data.status == "Failed")
             {
-                Console.WriteLine("DWG upload failed for id: " + Parking.Id);
+                Log.Error("DWG upload failed for id: " + Parking.Id);
                 throw new Exception(data.error);
             }
 
@@ -172,7 +174,7 @@
                 throw new HttpRequestException("Failed in ConvertDwg for id: " + Parking.Id);
             }
 
-            Console.WriteLine("DWG Conversion started for id: " + Parking.Id);
+            Log.Ok("DWG Conversion started for id: " + Parking.Id);
 
             return response;
         }
@@ -189,11 +191,11 @@
             {
                 if (responseBody.Contains("warning"))
                 {
-                    Console.WriteLine("DWG conversion successful with warnings!");
+                    Log.Alert("DWG conversion successful with warnings!");
                 }
                 else
                 {
-                    Console.WriteLine("DWG conversion successful for id: " + Parking.Id);
+                    Log.Ok("DWG conversion successful for id: " + Parking.Id);
                 }
 
                 return data.resourceLocation;
@@ -201,7 +203,7 @@
 
             if (data.status == "Failed")
             {
-                Console.WriteLine("DWG conversion process failed for id: " + Parking.Id);
+                Log.Error("DWG conversion process failed for id: " + Parking.Id);
                 throw new Exception(data.error);
             }
 
@@ -234,7 +236,7 @@
                 throw new HttpRequestException("Request to generate dataset failed for id: " + Parking.Id);
             }
 
-            Console.WriteLine("Dataset generation started for id: " + Parking.Id);
+            Log.Ok("Dataset generation started for id: " + Parking.Id);
 
             return response;
         }
@@ -249,13 +251,13 @@
             dynamic data = JObject.Parse(responseBody);
             if (data.status == "Succeeded")
             {
-                Console.WriteLine("Dataset generated successfully for id: " + Parking.Id);
+                Log.Ok("Dataset generated successfully for id: " + Parking.Id);
                 return data.resourceLocation;
             }
 
             if (data.status == "Failed")
             {
-                Console.WriteLine("Dataset generation failed for id: " + Parking.Id);
+                Log.Error("Dataset generation failed for id: " + Parking.Id);
                 throw new Exception(data.error);
             }
 
@@ -287,7 +289,7 @@
                 throw new HttpRequestException("Request to generate tileset failed for id: " + Parking.Id);
             }
 
-            Console.WriteLine("Tileset generation started for id: " + Parking.Id);
+            Log.Ok("Tileset generation started for id: " + Parking.Id);
 
             return response;
         }
@@ -302,13 +304,13 @@
             dynamic data = JObject.Parse(responseBody);
             if (data.status == "Succeeded")
             {
-                Console.WriteLine("Tileset generated successfully for id: " + Parking.Id);
+                Log.Ok("Tileset generated successfully for id: " + Parking.Id);
                 return data.resourceLocation;
             }
 
             if (data.status == "Failed")
             {
-                Console.WriteLine("Tileset generation failed for id: " + Parking.Id);
+                Log.Error("Tileset generation failed for id: " + Parking.Id);
                 throw new Exception(data.error);
             }
 
