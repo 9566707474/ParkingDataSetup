@@ -2,8 +2,8 @@
     "parkingBays": [
         {
             "locationId": "CP001",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT27"],
+            "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP002",

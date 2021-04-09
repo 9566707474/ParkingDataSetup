@@ -1,11 +1,31 @@
 {
     "@id": "dtmi:com:model:ParkingBay;1",
     "@type": "Interface",
-    "@context": "dtmi:dtdl:context;2",    
+    "@context": "dtmi:dtdl:context;2",
     "contents": [
         {
             "@type": "Property",
             "name": "IsOccupied",
+            "schema": "boolean"
+        },
+        {
+            "@type": "Property",
+            "name": "RegistrationNumber",
+            "schema": "string"
+        },
+        {
+            "@type": "Property",
+            "name": "BookingDateTime",
+            "schema": "dateTime"
+        },
+        {
+            "@type": "Property",
+            "name": "ParkingDateTime",
+            "schema": "dateTime"
+        },
+        {
+            "@type": "Property",
+            "name": "IsAlertRaised",
             "schema": "boolean"
         }
     ]

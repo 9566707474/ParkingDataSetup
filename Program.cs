@@ -124,15 +124,16 @@
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync()
         {
             string databaseName = configuration["CosmosDb:DatabaseName"];
-            string containerName = configuration["CosmosDb:ContainerName"];
+            string parkingSlotContainerName= configuration["CosmosDb:ParkingSlotsContainerName"];
+            string bookingContainerName = configuration["CosmosDb:BookingContainerName"];
             string account = configuration["CosmosDb:Account"];
             string key = configuration["CosmosDb:Key"];
 
             var client = new CosmosClient(account, key);
-            var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
+            var cosmosDbService = new CosmosDbService(client, databaseName, parkingSlotContainerName);
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/city");
-
+            await database.Database.CreateContainerIfNotExistsAsync(parkingSlotContainerName, "/city");
+            await database.Database.CreateContainerIfNotExistsAsync(bookingContainerName, "/locationId");
             return cosmosDbService;
         }
     }
