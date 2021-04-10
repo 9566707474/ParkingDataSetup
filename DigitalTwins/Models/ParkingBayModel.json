@@ -27,6 +27,16 @@
             "@type": "Property",
             "name": "IsAlertRaised",
             "schema": "boolean"
+        },
+        {
+            "@type": "Property",
+            "name": "AlertRaisedDateTime",
+            "schema": "dateTime"
+        },
+        {
+            "@type": "Property",
+            "name": "WronglyParkedVehicleRegistrationNumber",
+            "schema": "string"
         }
     ]
 }
