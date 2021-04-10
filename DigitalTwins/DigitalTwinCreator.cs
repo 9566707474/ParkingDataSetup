@@ -65,10 +65,11 @@
                     {
                         var parkingBayTwinName = string.Join("_", this.parking.Id, parkingSlot);
                         var parkingBayRelation = $"rel_{parkingBayTwinName}";
-                        await digitalTwinsHelper.CommandCreateDigitalTwin(new string[6]
+                        await digitalTwinsHelper.CommandCreateDigitalTwin(new string[9]
                           {
                         "CreateTwin", "dtmi:com:model:ParkingBay;1", parkingBayTwinName,
-                        "IsOccupied", "boolean", "false"
+                        "IsOccupied", "boolean", "false",
+                        "IsAlertRaised", "boolean", "false"
                           });
 
                         Log.Out($"Creating relationship between CarPark and Parking Bay");
