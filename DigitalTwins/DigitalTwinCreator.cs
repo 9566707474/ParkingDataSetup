@@ -8,6 +8,7 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Web;
     using Azure.DigitalTwins.Core;
     using Azure.Identity;
@@ -29,7 +30,39 @@
 
         }
 
-        public async void Create()
+        public DigitalTwinCreator(IConfiguration configuration)
+        {           
+            this.configuration = configuration;           
+
+        }
+
+        public async Task InitialiseTwins()
+        {
+            try
+            {
+                Log.Ok("Authenticating...");
+                var credential = new DefaultAzureCredential();
+                var client = new DigitalTwinsClient(new Uri(this.configuration["DigitalTwinInstanceUrl"]), credential);
+
+                Log.Ok($"Service client created – ready to go");
+
+                var digitalTwinsHelper = new CommandLoop(client);
+
+                await digitalTwinsHelper.CommandDeleteAllTwins(new string[0]);
+                await digitalTwinsHelper.CommandDeleteAllModels(new string[0]);
+
+                string[] modelsToUpload = new string[3] { "CreateModels", "CarParkModel", "ParkingBayModel" };
+
+                await digitalTwinsHelper.CommandCreateModels(modelsToUpload);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = string.Format("Digital Twin initialisation failed : {0}", ex);
+                Log.Error(errorMessage);
+            }
+        }
+
+                public async void CreateTwins()
         {
             try
             {
@@ -42,14 +75,7 @@
 
                     Log.Ok($"Service client created – ready to go");
 
-                    var digitalTwinsHelper = new CommandLoop(client);
-
-                    await digitalTwinsHelper.CommandDeleteAllTwins(new string[0]);
-                    await digitalTwinsHelper.CommandDeleteAllModels(new string[0]);
-
-                    string[] modelsToUpload = new string[3] { "CreateModels", "CarParkModel", "ParkingBayModel" };
-
-                    await digitalTwinsHelper.CommandCreateModels(modelsToUpload);
+                    var digitalTwinsHelper = new CommandLoop(client);                  
 
                     Log.Out($"Creating CarPark and ParkingBay...");
                     await digitalTwinsHelper.CommandCreateDigitalTwin(new string[12]

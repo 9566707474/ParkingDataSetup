@@ -46,46 +46,50 @@
 
             var indoorMapCreator = new List<IndoorMapCreator>();
             var cosmosDb = Task.Run(async () => await InitializeCosmosClientInstanceAsync())?.Result;
-           
-            foreach (var item in parking.Parkings)
-            {
-                var parkingResponse = Task.Run(async () => await cosmosDb.GetItemAsync(item.Id, item.City))?.Result;
-    
-                var isMapAlreadyGenerated = false;
 
-                if (parkingResponse != null && !string.IsNullOrEmpty(parkingResponse.StateSetID) && !string.IsNullOrEmpty(parkingResponse.TilesetID))
+            var twinInitialise = Task.Run(async () => await new DigitalTwinCreator(configuration).InitialiseTwins());
+            twinInitialise.Wait();
+
+              foreach (var item in parking.Parkings)
                 {
-                    isMapAlreadyGenerated = true;
+                    var parkingResponse = Task.Run(async () => await cosmosDb.GetItemAsync(item.Id, item.City))?.Result;
+
+                    var isMapAlreadyGenerated = false;
+
+                    if (parkingResponse != null && !string.IsNullOrEmpty(parkingResponse.StateSetID) && !string.IsNullOrEmpty(parkingResponse.TilesetID))
+                    {
+                        isMapAlreadyGenerated = true;
+                    }
+
+                    new DigitalTwinCreator(configuration, item, parkingBayRoot.ParkingBays).CreateTwins();
+
+                    indoorMapCreator.Add(new IndoorMapCreator(configuration)
+                    {
+                        Parking = item,
+                        IsMapAlreadyGenerated = isMapAlreadyGenerated
+                    }); ;
+
                 }
 
-                 new DigitalTwinCreator(configuration, item, parkingBayRoot.ParkingBays).Create();
-
-                indoorMapCreator.Add(new IndoorMapCreator(configuration)
-                {
-                    Parking = item,
-                    IsMapAlreadyGenerated = isMapAlreadyGenerated
-                }); ;
-             
-            }
-
 #if (DEBUG)
-            var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = 1 };
+                var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = 1 };
 #else
                         var parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
 #endif
 
-            Parallel.ForEach(indoorMapCreator.Where(imc => !imc.IsMapAlreadyGenerated), parallelOptions, p =>
-               {
-                   p.Run();
-               });
+                Parallel.ForEach(indoorMapCreator.Where(imc => !imc.IsMapAlreadyGenerated), parallelOptions, p =>
+                   {
+                       p.Run();
+                   });
 
-            var filteredRecords = indoorMapCreator.Where(e => !e.IsError).Select(p => p.Parking).ToList();
+                var filteredRecords = indoorMapCreator.Where(e => !e.IsError).Select(p => p.Parking).ToList();
 
-            var result = Task.Run(async () => await PushToDatabase(filteredRecords))?.Result;
+                var result = Task.Run(async () => await PushToDatabase(filteredRecords))?.Result;
 
-            Log.Ok($"Data transfered to cosmos db");
+                Log.Ok($"Data transfered to cosmos db");
 
-            Console.ReadLine();
+                Console.ReadLine();
+            
         }
 
         private static IConfiguration InitConfig()

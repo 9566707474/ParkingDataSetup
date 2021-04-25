@@ -2,38 +2,38 @@
     "parkingBays": [
         {
             "locationId": "CP001",
-            "parkingSlots": [ "UNIT27"],
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
             "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP002",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP003",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP004",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP005",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
-        },    
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
+        },
         {
             "locationId": "CP006",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
         },
         {
             "locationId": "CP007",
-            "parkingSlots": [ "Bay1", "Bay2" ],
-            "allowDigitalTwinCreation": false
+            "parkingSlots": [ "UNIT17", "UNIT18", "UNIT19", "UNIT20", "UNIT21", "UNIT22", "UNIT23", "UNIT24", "UNIT25", "UNIT26", "UNIT27" ],
+            "allowDigitalTwinCreation": true
         }
     ]
 }
